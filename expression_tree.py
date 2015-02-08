@@ -1,5 +1,7 @@
 """Expression Tree object for HW 2 (Genetic Programming)."""
 
+import math
+
 __author__ = "Ben Wiley and Jackson Spell"
 __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
 
@@ -26,40 +28,53 @@ class ExprTree:
 		else:
 			self.root = original.root.clone()
 
-	def evaluate(self):
+	def evaluate(self, x):
 		"""
 		Evaluate the expression tree and return the result.
 
 		Parameters:
-			None
+			x - float - input variable
 
 		Returns:
-			int or float - value the tree evaluates to
+			float - value the tree evaluates to
 		"""
 
-		return evaluate(root)
+		return float(evaluate(root, x))
 
-	def evaluate(self, node):
+	def evaluate(self, node, x):
 		"""
 		Evaluate the node and return the result.
 
 		Parameters:
 			node - Node - node to evaluate
+			x - float - input variable
 
 		Returns:
 			int or float - value the node evaluates to
 		"""
 
-		if type(node.value) is int:
+		if node.value == "x":
+			return x
+		elif type(node.value) is int:
 			return node.value
+
 		elif node.value == "+":
 			return evaluate(node.left) + evaluate(node.right)
 		elif node.value == "-":	
 			return evaluate(node.left) - evaluate(node.right)
 		elif node.value == "*":
 			return evaluate(node.left) * evaluate(node.right)
-		else:
-			return evaluate(node.left) / evaluate(node.right)
+		elif node.value == "/":
+			return evaluate(node.left) / float(evaluate(node.right))
+
+		elif node.value == "pow":
+			return math.pow(x, evaluate(node.left))
+		elif node.value == "e":
+			return math.exp(evaluate(node.left))
+		elif node.value == "sin":
+			return math.sin(evaluate(node.left))
+		elif node.value == "log":
+			return math.log(evaluate(node.left))
 
 	class Node:
 		"""
@@ -71,13 +86,13 @@ class ExprTree:
 			Node Constructor.
 
 			Parameters:
-				v - int, string - value of node (either int or +, -, *, /)
+				v - int, string - value of node (either int or +, -, *, /, pow, e, sin, log)
 
 			Returns:
 				instantiated node with given value and empty children
 			"""
 
-			if type(v) is int or v in ("+", "-", "*", "/"):
+			if type(v) is int or v in ("+", "-", "*", "/", "pow", "e", "sin", "log"):
 				self.value = v
 				self.left = None
 				self.right = None
