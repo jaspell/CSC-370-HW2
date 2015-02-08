@@ -20,7 +20,7 @@ def fitness(tree):
 		float - fitness of tree, smaller is better
 	"""
 
-def reproduce(pop):
+def crossover(pop):
 	"""
 	Create new generation from current population.
 

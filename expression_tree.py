@@ -24,7 +24,7 @@ class ExprTree:
 		# Use all operations
 		if ops:
 
-		# Use only +, -, *, /, pow.		
+		# Use only x, +, -, *, /, pow.		
 		else:
 
 
@@ -106,13 +106,13 @@ class ExprTree:
 			Node Constructor.
 
 			Parameters:
-				v - int, string - value of node (either int or +, -, *, /, pow, e, sin, log)
+				v - int, string - value of node (either int or x, +, -, *, /, pow, e, sin, log)
 
 			Returns:
 				instantiated node with given value and empty children
 			"""
 
-			if type(v) is int or v in ("+", "-", "*", "/", "pow", "e", "sin", "log"):
+			if type(v) is int or v in ("x", "+", "-", "*", "/", "pow", "e", "sin", "log"):
 				self.value = v
 				self.left = None
 				self.right = None
