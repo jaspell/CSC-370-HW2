@@ -26,6 +26,41 @@ class ExprTree:
 		else:
 			self.root = original.root.clone()
 
+	def evaluate(self):
+		"""
+		Evaluate the expression tree and return the result.
+
+		Parameters:
+			None
+
+		Returns:
+			int or float - value the tree evaluates to
+		"""
+
+		return evaluate(root)
+
+	def evaluate(self, node):
+		"""
+		Evaluate the node and return the result.
+
+		Parameters:
+			node - Node - node to evaluate
+
+		Returns:
+			int or float - value the node evaluates to
+		"""
+
+		if type(node.value) is int:
+			return node.value
+		elif node.value == "+":
+			return evaluate(node.left) + evaluate(node.right)
+		elif node.value == "-":	
+			return evaluate(node.left) - evaluate(node.right)
+		elif node.value == "*":
+			return evaluate(node.left) * evaluate(node.right)
+		else:
+			return evaluate(node.left) / evaluate(node.right)
+
 	class Node:
 		"""
 		Node for ExprTree.
