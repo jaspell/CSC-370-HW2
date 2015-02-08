@@ -10,23 +10,23 @@ class ExprTree:
 	A tree representing a mathematical expression.
 	"""
 
-	def __init__(self, original=None):
+	def __init__(self, ops):
 		"""
 		ExprTree Constructor.
 
 		Parameters:
-			original - ExprTree - tree to copy
+			ops - bool - complex operations allowed (e^x, sin, log)
 
 		Returns:
-			instantiated copy of the original board (if supplied),
-			or otherwise, randomly built expression tree
+			randomly built expression tree
 		"""
 
-		if original is None:
+		# Use all operations
+		if ops:
 
-
+		# Use only +, -, *, /, pow.		
 		else:
-			self.root = original.root.clone()
+
 
 	def evaluate(self, x):
 		"""
@@ -39,11 +39,14 @@ class ExprTree:
 			float - value the tree evaluates to
 		"""
 
-		return float(evaluate(root, x))
+		return float(ExprTree.evaluate(self.root, x))
 
-	def evaluate(self, node, x):
+	@staticmethod
+	def evaluate(node, x):
 		"""
 		Evaluate the node and return the result.
+
+		Static method.
 
 		Parameters:
 			node - Node - node to evaluate
@@ -59,22 +62,39 @@ class ExprTree:
 			return node.value
 
 		elif node.value == "+":
-			return evaluate(node.left) + evaluate(node.right)
+			return ExprTree.evaluate(node.left, x) + ExprTree.evaluate(node.right, x)
 		elif node.value == "-":	
-			return evaluate(node.left) - evaluate(node.right)
+			return ExprTree.evaluate(node.left, x) - ExprTree.evaluate(node.right, x)
 		elif node.value == "*":
-			return evaluate(node.left) * evaluate(node.right)
+			return ExprTree.evaluate(node.left, x) * ExprTree.evaluate(node.right, x)
 		elif node.value == "/":
-			return evaluate(node.left) / float(evaluate(node.right))
-
+			return ExprTree.evaluate(node.left, x) / float(ExprTree.evaluate(node.right, x))
 		elif node.value == "pow":
-			return math.pow(x, evaluate(node.left))
+			return math.pow(x, ExprTree.evaluate(node.left, x))
+
 		elif node.value == "e":
-			return math.exp(evaluate(node.left))
+			return math.exp(ExprTree.evaluate(node.left, x))
 		elif node.value == "sin":
-			return math.sin(evaluate(node.left))
+			return math.sin(ExprTree.evaluate(node.left, x))
 		elif node.value == "log":
-			return math.log(evaluate(node.left))
+			return math.log(ExprTree.evaluate(node.left, x))
+
+	@staticmethod
+	def combine(first, second):
+		"""
+		Combine 2 trees to create a child tree.
+
+		Static method.
+
+		Parameters:
+			first - ExprTree - tree to combine
+			second - ExprTree - tree to combine
+
+		Returns:
+			ExprTree - child of given trees
+		"""
+
+		pass
 
 	class Node:
 		"""
