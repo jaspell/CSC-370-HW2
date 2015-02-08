@@ -28,30 +28,25 @@ class ExprTree:
 
 	class Node:
 		"""
-		Fix this doc later
+		Node for ExprTree.
 		"""
 
-		def __init__(self, original=None):
+		def __init__(self, v):
 			"""
 			Node Constructor.
 
 			Parameters:
-				original - Node - node to copy
+				v - int, string - value of node (either int or +, -, *, /)
 
 			Returns:
-				instantiated copy of the original node (if supplied),
-				or otherwise, a node with no defined properties
-				(I MIGHT WANT TO CHANGE THIS)
+				instantiated node with given value and empty children
 			"""
 
-			if original is None:
-
+			if type(v) is int or v in ("+", "-", "*", "/"):
+				self.value = v
+				self.left = None
+				self.right = None
 
 			else:
-				#set all properties to equal those of original
-
-				self.left = Node(original.left)
-				self.right = Node(original.right)
-
-
+				raise ValueError("incorrect node value: " + str(v))
 
