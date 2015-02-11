@@ -1,15 +1,11 @@
 """Genetic programming algorithm for HW 2 (8-puzzle A* search)."""
 
 import os
-
-from expression_tree import ExprTree
+import sys
+import random
 
 __author__ = "Ben Wiley and Jackson Spell"
 __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
-
-"""
-We should include the fitness functions in here, which will use a squared error evaluation.
-"""
 
 def fitness(tree, mode):
 	"""
@@ -31,24 +27,37 @@ def fitness(tree, mode):
 	step = 0.05
 	num_points = 100
 	
+	
+	# Maximum number of nodes the tree is allowed to have.
+	max_size = 16
+
+	# If tree exceeds max size, it's no good.
+	if tree.count() > max_size:
+		return sys.maxint
+
 	error = 0.0
 
-	# Evaluate fitness based on Generator1.jar.
-	if mode == 1:
-		for x in range(num_points):
-			error += (tree.evaluate(x*step) - os.system("java -jar Generator1.jar "+str(x*step)))**2
+	try:
+		# Evaluate fitness based on Generator1.jar.
+		if mode == 1:
+			for x in range(num_points):
+				error += (tree.evaluate(x*step) - os.system("java -jar Generator1.jar "+str(x*step)))**2
 
-	# Evaluate fitness based on data.txt.
-	elif mode == 2:
-		with open("data.txt", 'r') as inf:
-			for i in range(ratio*total_data):
-				inputs = inf.next().split()
-				error += (tree.evaluate(inputs[0], inputs[1], inputs[2]) - inputs[3])**2
+		# Evaluate fitness based on data.txt.
+		elif mode == 2:
+			with open("data.txt", 'r') as inf:
+				for i in range(ratio*total_data):
+					inputs = inf.next().split()
+					error += (tree.evaluate(inputs[0], inputs[1], inputs[2]) - inputs[3])**2
 
-	# Evaluate fitness based on Generator2.jar.
-	elif mode == 3:
-		for x in range(num_points):
-			error += (tree.evaluate(x*step) - os.system("java -jar Generator2.jar "+str(x*step)))**2
+		# Evaluate fitness based on Generator2.jar.
+		elif mode == 3:
+			for x in range(num_points):
+				error += (tree.evaluate(x*step) - os.system("java -jar Generator2.jar "+str(x*step)))**2
+
+	# If the tree causes a ValueError, it's no good.
+	except ValueError:
+		return sys.maxint
 
 	return error
 
@@ -73,5 +82,21 @@ def mutate(pop, ratio):
 		ratio - float - 0.0 <= ratio < 1.0 - proportion of population to mutate
 
 	Returns:
-		list of ExprTree's - mutated population
+		None
 	"""
+
+	for tree in pop:
+		if random.random() < ratio:
+			mutate(tree)
+
+def mutate(tree):
+	"""
+	Mutate given tree.
+
+	Parameters:
+		tree - ExprTree - tree to mutate
+
+	Returns:
+		None
+	"""
+
