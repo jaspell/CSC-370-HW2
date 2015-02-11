@@ -10,6 +10,14 @@ class ExprTree:
 	A tree representing a mathematical expression.
 	"""
 
+	OPS_1 = ["x", "+", "-", "*", "/", "pow"]
+	OPS_2 = ["x", "x2", "x3", "+", "-", "*", "/", "pow"]
+	OPS_3 = ["x", "+", "-", "*", "/", "pow", "e", "sin", "log"]
+
+	OPS_VARS = ["x", "x2", "x3"]
+	OPS_UNARY = ["pow", "e", "sin", "log"]
+	OPS_BINARY = ["+", "-", "*", "/"]
+
 	def __init__(self, ops, original=None):
 		"""
 		ExprTree Constructor.

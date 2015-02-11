@@ -111,13 +111,14 @@ def weighted_pick(weights,n_picks):
 	s = sum(weights)
 	return numpy.searchsorted(t,numpy.random.rand(n_picks)*s)
 
-def mutate(pop, ratio):
+def mutate(pop, ratio, mode):
 	"""
 	Alter population by mutation.
 
 	Parameters:
 		pop - list of ExprTree's - original population
 		ratio - float - 0.0 <= ratio < 1.0 - proportion of population to mutate
+		mode - int - 1, 2, 3 - which data source to evaluate the trees on
 
 	Returns:
 		None
@@ -127,14 +128,39 @@ def mutate(pop, ratio):
 		if random.random() < ratio:
 			mutate(tree)
 
-def mutate(tree):
+def mutate(tree, mode):
 	"""
-	Mutate given tree.
+	Mutate given tree at one node.
 
 	Parameters:
 		tree - ExprTree - tree to mutate
+		mode - int - 1, 2, 3 - which data source to evaluate the trees on
 
 	Returns:
 		None
 	"""
 
+	# CHANGE RANDINT BOUNDS DEPENDING ON INDEXING SYSTEM FOR NODE COUNTING (DFS SEARCH, COUNT).
+	node = tree.find_node(random.randint(0, tree.count()))
+	mutate_node(node, mode)
+
+def mutate_node(node, mode):
+	"""
+	Mutate node.
+
+	Parameters:
+		node - ExprTree.Node - original node to mutate
+		mode - int - 1, 2, 3 - which data source to evaluate the trees on
+
+	Returns:
+		None
+	"""
+
+	# Replace node.value with either input variable or constant.
+	if type(node.value) is int or node.value in ExprTree.OPS_VARS:
+
+	# Replace node.value with a unary operator.
+	elif node.value in ExprTree.OPS_UNARY:
+
+	# Replace node.value with a binary operator.
+	elif node.value in ExprTree.OPS_BINARY:
