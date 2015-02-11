@@ -62,21 +62,21 @@ class ExprTree:
 			node.right = Node(right.value)
 			clone(node.right, right.left, right.right)
 
-	def evaluate(self, x):
+	def evaluate(self, x, x2=None, x3=None):
 		"""
 		Evaluate the expression tree and return the result.
 
 		Parameters:
-			x - float - input variable
+			x, x2, x3 - float - input variables
 
 		Returns:
 			float - value the tree evaluates to
 		"""
 
-		return float(ExprTree.evaluate(self.root, x))
+		return float(ExprTree.evaluate(self.root, x, x2, x3))
 
 	@staticmethod
-	def evaluate(node, x):
+	def evaluate(node, x, x2, x3):
 		"""
 		Evaluate the node and return the result.
 
@@ -84,7 +84,7 @@ class ExprTree:
 
 		Parameters:
 			node - Node - node to evaluate
-			x - float - input variable
+			x, x2, x3 - float - input variables
 
 		Returns:
 			int or float - value the node evaluates to
@@ -92,26 +92,30 @@ class ExprTree:
 
 		if node.value == "x":
 			return x
+		elif node.value == "x2":
+			return x2
+		elif node.value == "x3":
+			return x3
 		elif type(node.value) is int:
 			return node.value
 
 		elif node.value == "+":
-			return ExprTree.evaluate(node.left, x) + ExprTree.evaluate(node.right, x)
+			return ExprTree.evaluate(node.left,x,x2,x3) + ExprTree.evaluate(node.right,x,x2,x3)
 		elif node.value == "-":	
-			return ExprTree.evaluate(node.left, x) - ExprTree.evaluate(node.right, x)
+			return ExprTree.evaluate(node.left,x,x2,x3) - ExprTree.evaluate(node.right,x,x2,x3)
 		elif node.value == "*":
-			return ExprTree.evaluate(node.left, x) * ExprTree.evaluate(node.right, x)
+			return ExprTree.evaluate(node.left,x,x2,x3) * ExprTree.evaluate(node.right,x,x2,x3)
 		elif node.value == "/":
-			return ExprTree.evaluate(node.left, x) / float(ExprTree.evaluate(node.right, x))
+			return ExprTree.evaluate(node.left,x,x2,x3) / float(ExprTree.evaluate(node.right,x,x2,x3))
 		elif node.value == "pow":
-			return math.pow(x, ExprTree.evaluate(node.left, x))
+			return math.pow(ExprTree.evaluate(node.left,x,x2,x3), ExprTree.evaluate(node.right,x,x2,x3))
 
 		elif node.value == "e":
-			return math.exp(ExprTree.evaluate(node.left, x))
+			return math.exp(ExprTree.evaluate(node.left,x,x2,x3))
 		elif node.value == "sin":
-			return math.sin(ExprTree.evaluate(node.left, x))
+			return math.sin(ExprTree.evaluate(node.left,x,x2,x3))
 		elif node.value == "log":
-			return math.log(ExprTree.evaluate(node.left, x))
+			return math.log(ExprTree.evaluate(node.left,x,x2,x3))
 
 	@staticmethod
 	def combine(first, second):
@@ -146,7 +150,7 @@ class ExprTree:
 				instantiated node with given value and empty children
 			"""
 
-			if type(v) is int or v in ("x", "+", "-", "*", "/", "pow", "e", "sin", "log"):
+			if type(v) is int or v in ("x","x2","x3","+","-","*","/","pow","e","sin","log"):
 				self.value = v
 				self.left = None
 				self.right = None
