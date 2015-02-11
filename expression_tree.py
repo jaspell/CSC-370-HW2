@@ -10,23 +10,57 @@ class ExprTree:
 	A tree representing a mathematical expression.
 	"""
 
-	def __init__(self, ops):
+	def __init__(self, ops, original=None):
 		"""
 		ExprTree Constructor.
 
 		Parameters:
-			ops - bool - complex operations allowed (e^x, sin, log)
+			ops - int - 1 for simple ops, 2 for three-var (x1, x2, x3),
+				3 for complex operations allowed (e^x, sin, log)
+			original - ExprTree - tree to copy
 
 		Returns:
 			randomly built expression tree
 		"""
 
-		# Use all operations
-		if ops:
+		if original:
+			self.root = Node(original.root.value)
+			clone(self.root, original.root.left, original.root.right)
 
-		# Use only x, +, -, *, /, pow.		
-		else:
+		# Use only x, +, -, *, /, pow.
+		elif ops == 1:
 
+		# Use only x1, x2, x3, +, -, *, /, pow.		
+		elif ops == 2:
+
+		# Use one variable with all available operations.
+		else: # ops == 3:
+			
+
+	@staticmethod
+	def clone(node, left=None, right=None):
+		"""
+		Recursive function to clone the left and right nodes for corresponding
+			fields in the given new node.
+
+		Parameters:
+			node - Node - the current (already cloned) node
+			left - Node - the previous left node to be cloned
+			right - Node - the previous right node to be cloned
+
+		Returns:
+			nothing
+		"""
+
+		if left:
+
+			node.left = Node(left.value)
+			clone(node.left, left.left, left.right)
+
+		if right:
+
+			node.right = Node(right.value)
+			clone(node.right, right.left, right.right)
 
 	def evaluate(self, x):
 		"""
