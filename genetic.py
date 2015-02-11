@@ -4,6 +4,10 @@ import os
 import sys
 import random
 
+import numpy
+
+from expression_tree import ExprTree
+
 __author__ = "Ben Wiley and Jackson Spell"
 __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
 
@@ -13,7 +17,7 @@ def fitness(tree, mode):
 
 	Parameters:
 		tree - ExprTree - tree to evaluate
-		mode - int - 1, 2, 3 - which data source this run uses
+		mode - int - 1, 2, 3 - which data source to evaluate the tree on
 
 	Returns:
 		float - fitness of tree, smaller is better
@@ -35,7 +39,8 @@ def fitness(tree, mode):
 	if tree.count() > max_size:
 		return sys.maxint
 
-	error = 0.0
+	# Error is initialized to 0.000001 to avoid divide-by-zero errors.
+	error = 0.000001
 
 	try:
 		# Evaluate fitness based on Generator1.jar.
@@ -61,17 +66,50 @@ def fitness(tree, mode):
 
 	return error
 
-def crossover(pop):
+def crossover(pop, mode):
 	"""
 	Create new generation from current population.
 
 	Parameters:
 		pop - list of ExprTree's - parent population
+		mode - int - 1, 2, 3 - which data source to evaluate the trees on
 
 	Returns:
-		list of ExprTree's - new population
+		list of ExprTrees - child population of same size as input population
 	"""
 
+	# Evaluate each tree's fitness.  Crossover weights are the inverse of the fitness score.
+	fit = []
+	for tree in pop:
+			fit.append(1.0 / fitness(tree, mode))
+
+	crosses = weighted_pick(fit, len(fit))
+	children = []
+
+	for i in xrange(0, len(crosses), 2):
+		c1, c2 = ExprTree.combine(pop[crosses[i]], pop[crosses[i+1]])
+		children.append(c1)
+		children.append(c2)
+
+	return children
+
+def weighted_pick(weights,n_picks):
+	"""
+	Weighted random selection from a list.
+
+	Sourced from http://glowingpython.blogspot.com/2012/09/weighted-random-choice.html.
+
+	Parameters:
+		weights - list of floats - list of weighting factors for tree choices
+		n_picks - int - number of indexes to pick
+
+	Returns:
+		list of indices
+	"""
+
+	t = numpy.cumsum(weights)
+	s = sum(weights)
+	return numpy.searchsorted(t,numpy.random.rand(n_picks)*s)
 
 def mutate(pop, ratio):
 	"""
