@@ -87,7 +87,7 @@ def crossover(pop, mode):
 	children = []
 
 	for i in xrange(0, len(crosses), 2):
-		c1, c2 = ExprTree.combine(pop[crosses[i]], pop[crosses[i+1]])
+		c1, c2 = combine(pop[crosses[i]], pop[crosses[i+1]])
 		children.append(c1)
 		children.append(c2)
 
@@ -110,6 +110,26 @@ def weighted_pick(weights,n_picks):
 	t = numpy.cumsum(weights)
 	s = sum(weights)
 	return numpy.searchsorted(t,numpy.random.rand(n_picks)*s)
+
+def combine(first, second):
+	"""
+	Combine 2 trees to create a child tree.
+
+	Static method.
+
+	Parameters:
+		first - ExprTree - tree to combine
+		second - ExprTree - tree to combine
+
+	Returns:
+		tuple - (ExprTree, ExprTree) - children of given trees
+	"""
+
+	first = ExprTree(0, first)
+	second = ExprTree(0, second)
+
+	first.count()
+	second.count()
 
 def mutate(pop, ratio, mode):
 	"""
