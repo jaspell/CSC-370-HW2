@@ -11,12 +11,12 @@ class ExprTree:
 	A tree representing a mathematical expression.
 	"""
 
-	OPS_1 = ["x", "+", "-", "*", "/", "pow"]
-	OPS_2 = ["x", "x2", "x3", "+", "-", "*", "/", "pow", "pow2", "pow3"]
-	OPS_3 = ["x", "+", "-", "*", "/", "pow", "e", "sin", "log"]
+	OPS_1 = ["x", "+", "-", "*", "/"]
+	OPS_2 = ["x", "x2", "x3", "+", "-", "*", "/"]
+	OPS_3 = ["x", "+", "-", "*", "/", "e", "sin", "log"]
 
 	OPS_VARS = ["x", "x2", "x3"]
-	OPS_UNARY = ["e", "sin", "log", "pow", "pow2", "pow3"]
+	OPS_UNARY = ["e", "sin", "log"]
 	OPS_BINARY = ["+", "-", "*", "/"]
 
 	def __init__(self, ops, original=None):
@@ -36,10 +36,10 @@ class ExprTree:
 			self.root = Node(original.root.value)
 			clone(self.root, original.root.left, original.root.right)
 
-		# Use only x, +, -, *, /, pow.
+		# Use only x, +, -, *, /,.
 		elif ops == 1:
 
-		# Use only x1, x2, x3, +, -, *, /, pow.		
+		# Use only x1, x2, x3, +, -, *, /.		
 		elif ops == 2:
 
 		# Use one variable with all available operations.
@@ -217,14 +217,6 @@ class ExprTree:
 		elif node.value == "/":
 			return ExprTree.evaluate(node.left,x,x2,x3) / float(ExprTree.evaluate(node.right,x,x2,x3))
 
-		# Integer Powers of X1, X2 and X3
-		elif node.value == "pow":
-			return math.pow(x, node.power)
-		elif node.value == "pow2":
-			return math.pow(x2, node.power)
-		elif node.value == "pow3":
-			return math.pow(x3, node.power)
-
 		# Unary Ops on X
 		elif node.value == "e":
 			return math.exp(x)
@@ -270,12 +262,12 @@ class ExprTree:
 		Node for ExprTree.
 		"""
 
-		def __init__(self, v, p=None):
+		def __init__(self, v):
 			"""
 			Node Constructor.
 
 			Parameters:
-				v - int, string - value of node (int, float or x,+,-,*,/,pow,pow2,pow3,e,sin,log)
+				v - int, string - value of node (int, float or x, +, -, *, /, e, sin, log)
 
 			Returns:
 				instantiated node with given value and empty children
@@ -284,7 +276,6 @@ class ExprTree:
 			self.value = v
 			self.left = None
 			self.right = None
-			if p: self.power = p
 
 		def __str__(self):
 			"""
@@ -307,14 +298,7 @@ class ExprTree:
 			elif self.value == "+" or self.value == "-" or self.value == "*" or self.value == "/":
 				return "(" + str(self.left) + self.value + str(self.right) + ")"
 
-			# Integer Powers of X1, X2 and X3
-			elif self.value == "pow":
-				return "x^" +  str(self.power)
-			elif self.value == "pow2":
-				return "x2^" +  str(self.power)
-			elif self.value == "pow3":
-				return "x3^" +  str(self.power)
-
+			# CHANGE FOR ACTUAL GENERATOR 3 IMPLEMENTATION
 			# Unary Ops on X
 			elif self.value == "e":
 				return "e^x"
