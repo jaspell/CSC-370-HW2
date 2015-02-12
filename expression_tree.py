@@ -163,46 +163,8 @@ class ExprTree:
 		Returns:
 			string - human-readable representation of the tree's equivalent function
 		"""
-
-		return to_string(self.root)
-
-	@staticmethod
-	def to_string(node):
-		"""
-		Return a readable representation of the equivalent function of tree rooted at node
-
-		Parameters:
-			node - Node - root of tree to evaluate
-
-		Returns:
-			string - human-readable representation of the equivalent function of tree rooted at node
-		"""
-
-		# Vars and Constants
-		if node.value == "x" or node.value == "x2" or node.value == "x3":
-			return value
-		elif type(node.value) is int or type(node.value) is float:
-			return str(node.value)
-
-		# Binary Ops
-		elif node.value == "+" or node.value == "-" or node.value == "*" or node.value == "/":
-			return "(" + to_string(node.left) + node.value + to_string(node.right) + ")"
-
-		# Integer Powers of X1, X2 and X3
-		elif node.value == "pow":
-			return "x^" +  str(node.power)
-		elif node.value == "pow2":
-			return "x2^" +  str(node.power)
-		elif node.value == "pow3":
-			return "x3^" +  str(node.power)
-
-		# Unary Ops on X
-		elif node.value == "e":
-			return "e^x"
-		elif node.value == "sin":
-			return "sin(x)"
-		elif node.value == "log":
-			return "log(x)"
+		
+		return str(self.root)
 
 	class Node:
 		"""
@@ -224,4 +186,41 @@ class ExprTree:
 			self.left = None
 			self.right = None
 			if p: self.power = p
+
+		def __str__(self):
+			"""
+			Return a readable representation of the equivalent function of tree rooted at node
+
+			Parameters:
+				none
+
+			Returns:
+				string - readable representation of the equivalent function of tree rooted at node
+			"""
+
+			# Vars and Constants
+			if self.value == "x" or self.value == "x2" or self.value == "x3":
+				return self.value
+			elif type(self.value) is int or type(self.value) is float:
+				return str(self.value)
+
+			# Binary Ops
+			elif self.value == "+" or self.value == "-" or self.value == "*" or self.value == "/":
+				return "(" + str(self.left) + self.value + str(self.right) + ")"
+
+			# Integer Powers of X1, X2 and X3
+			elif self.value == "pow":
+				return "x^" +  str(self.power)
+			elif self.value == "pow2":
+				return "x2^" +  str(self.power)
+			elif self.value == "pow3":
+				return "x3^" +  str(self.power)
+
+			# Unary Ops on X
+			elif self.value == "e":
+				return "e^x"
+			elif self.value == "sin":
+				return "sin(x)"
+			elif self.value == "log":
+				return "log(x)"
 
