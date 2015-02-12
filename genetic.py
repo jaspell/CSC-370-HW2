@@ -162,5 +162,19 @@ def mutate_node(node, mode):
 	# Replace node.value with a unary operator.
 	elif node.value in ExprTree.OPS_UNARY:
 
+		# Make sure replacement operation is not the same as the original.
+		replace = random.choice(ExprTree.OPS_UNARY)
+		while replace == node.value:
+			replace = random.choice(ExprTree.OPS_UNARY)
+
+		node.value = replace
+
 	# Replace node.value with a binary operator.
 	elif node.value in ExprTree.OPS_BINARY:
+
+		# Make sure replacement operation is not the same as the original.
+		replace = random.choice(ExprTree.OPS_BINARY)
+		while replace == node.value:
+			replace = random.choice(ExprTree.OPS_BINARY)
+
+		node.value = replace
