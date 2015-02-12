@@ -1,6 +1,7 @@
 """Expression Tree object for HW 2 (Genetic Programming)."""
 
 import math
+import random
 
 __author__ = "Ben Wiley and Jackson Spell"
 __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
@@ -44,6 +45,104 @@ class ExprTree:
 		# Use one variable with all available operations.
 		else: # ops == 3:
 			
+
+	def count(self):
+		"""
+		Recursive function for counting number of nodes in tree.
+
+		Parameters:
+			none
+
+		Returns:
+			int - number of nodes
+		"""
+
+		return count(self.root)
+
+
+	@staticmethod
+	def count(node):
+		"""
+		Recursive function for counting number of nodes rooted at given node.
+
+		Parameters:
+			node - Node - the root node
+
+		Returns:
+			int - number of nodes
+		"""
+
+		c = 1
+		if node.left:
+			c += count(node.left)
+		if node.right:
+			c += count(node.right)
+		return c
+
+	def random_parent(self):
+		"""
+		Finds a random non-root node in tree and returns its parent and direction (left/right)
+
+		Parameters:
+			none
+
+		Returns:
+			tuple - (parent, left)
+				parent - Node - parent of the chosen node
+				left - bool - indicates whether chosen node is the left child of the parent
+		"""
+
+		c = count()
+		r = random.randint(2, c)
+		parent, left, count, found = get_parent(self.root, r)
+		return parent, left
+
+	@staticmethod
+	def get_parent(node, n, count=0):
+		"""
+		Recursive function to find nth node in tree depth-first, return its parent and [left/right].
+
+		Parameters:
+			node - Node - the current node
+			n - int - which node to search for
+			count - int - # of nodes that have been searched before this node
+
+		Returns:
+			tuple - (parent, left, count, found)
+				parent - Node - parent of the found node (will be passed as None unless found)
+				left - bool - indicates whether found node is left child of parent (None unless found)
+				count - int - total # of nodes that have been searched after subtree is exhausted
+				found - bool - indicates whether desired node has been found
+		"""
+
+		count += 1
+
+		if count == n:
+			return None, None, count, True
+
+		if node.left:
+
+			parent, left, count, found = get_parent(node.left, n, count)
+
+			if found:
+
+				if parent:
+					return parent, left, count, found
+				else:
+					return node, True, count, found
+
+		if node.right:
+
+			parent, left, count, found = get_parent(node.right, n, count)
+
+			if found:
+
+				if parent:
+					return parent, left, count, found
+				else:
+					return node, False, count, found
+
+		return None, None, count, False
 
 	@staticmethod
 	def clone(node, left=None, right=None):
@@ -163,7 +262,7 @@ class ExprTree:
 		Returns:
 			string - human-readable representation of the tree's equivalent function
 		"""
-		
+
 		return str(self.root)
 
 	class Node:
