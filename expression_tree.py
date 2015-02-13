@@ -33,18 +33,102 @@ class ExprTree:
 		"""
 
 		if original:
+
 			self.root = Node(original.root.value)
 			clone(self.root, original.root.left, original.root.right)
 
-		# Use only x, +, -, *, /,.
-		elif ops == 1:
+		else:
 
-		# Use only x1, x2, x3, +, -, *, /.		
-		elif ops == 2:
+			self.root = Node(random.choice(OPS_BINARY))
+			populate(self.root, ops)
+	
+	@staticmethod
+	def clone(node, left=None, right=None):
+		"""
+		Recursive function to clone the left and right nodes for corresponding
+			fields in the given new node.
 
-		# Use one variable with all available operations.
-		else: # ops == 3:
-			
+		Parameters:
+			node - Node - the current (already cloned) node
+			left - Node - the previous left node to be cloned
+			right - Node - the previous right node to be cloned
+
+		Returns:
+			nothing
+		"""
+
+		if left:
+
+			node.left = Node(left.value)
+			clone(node.left, left.left, left.right)
+
+		if right:
+
+			node.right = Node(right.value)
+			clone(node.right, right.left, right.right)
+
+	@staticmethod
+	def populate(node, ops):
+		"""
+		Recursive function for filling children of given (non-var/constant) node.
+
+		Parameters:
+			node - Node - the current node
+
+		Returns:
+			nothing
+		"""
+
+		r = random.random()
+
+		if r < .125 and node.value not in OPS_UNARY:
+			#set left child to constant
+			if ops == 2:
+				node.left = Node(random.uniform(-100, 100))
+			else:
+				node.left = Node(random.randint(-100, 100))
+
+
+		elif r < .25:
+			#set left child to variable
+			if ops == 2:
+				node.left = Node(random.choice(OPS_VARS))
+			else:
+				node.left = Node("x")
+
+		else:
+			#set left child to some other function (unary or binary)
+			if ops == 3 and random.random() < .5:
+				node.left = Node(random.choice(OPS_UNARY))
+			else:
+				node.left = Node(random.choice(OPS_BINARY))
+			populate(node.left, ops)
+
+		if node.value not in OPS_UNARY:
+
+			r = random.random()
+
+			if r < .125:
+				#set right child to constant
+				if ops == 2:
+					node.right = Node(random.uniform(-100, 100))
+				else:
+					node.right = Node(random.randint(-100, 100))
+
+			elif r < .25:
+				#set right child to variable
+				if ops == 2:
+					node.right = Node(random.choice(OPS_VARS))
+				else:
+					node.right = Node("x")
+
+			else:
+				#set right child to some other function (unary or binary)
+				if ops == 3 and random.random() < .5:
+					node.right = Node(random.choice(OPS_UNARY))
+				else:
+					node.right = Node(random.choice(OPS_BINARY))
+				populate(node.right, ops)
 
 	def count(self):
 		"""
@@ -58,7 +142,6 @@ class ExprTree:
 		"""
 
 		return count(self.root)
-
 
 	@staticmethod
 	def count(node):
@@ -92,9 +175,8 @@ class ExprTree:
 				left - bool - indicates whether chosen node is the left child of the parent
 		"""
 
-		c = count()
-		r = random.randint(2, c)
-		parent, left, count, found = get_parent(self.root, r)
+		r = random.randint(2, count())
+		parent, left, c, f = get_parent(self.root, r)
 		return parent, left
 
 	@staticmethod
@@ -143,31 +225,6 @@ class ExprTree:
 					return node, False, count, found
 
 		return None, None, count, False
-
-	@staticmethod
-	def clone(node, left=None, right=None):
-		"""
-		Recursive function to clone the left and right nodes for corresponding
-			fields in the given new node.
-
-		Parameters:
-			node - Node - the current (already cloned) node
-			left - Node - the previous left node to be cloned
-			right - Node - the previous right node to be cloned
-
-		Returns:
-			nothing
-		"""
-
-		if left:
-
-			node.left = Node(left.value)
-			clone(node.left, left.left, left.right)
-
-		if right:
-
-			node.right = Node(right.value)
-			clone(node.right, right.left, right.right)
 
 	def evaluate(self, x, x2=None, x3=None):
 		"""
@@ -225,25 +282,6 @@ class ExprTree:
 		elif node.value == "log":
 			return math.log(x)
 
-	"""
-	@staticmethod
-	def combine(first, second):
-		"#""
-		Combine 2 trees to create a child tree.
-
-		Static method.
-
-		Parameters:
-			first - ExprTree - tree to combine
-			second - ExprTree - tree to combine
-
-		Returns:
-			ExprTree - child of given trees
-		"#""
-
-		pass
-	"""
-
 	def __str__(self):
 		"""
 		Return a readable representation of the tree's equivalent function
@@ -299,11 +337,11 @@ class ExprTree:
 				return "(" + str(self.left) + self.value + str(self.right) + ")"
 
 			# CHANGE FOR ACTUAL GENERATOR 3 IMPLEMENTATION
-			# Unary Ops on X
+			# Unary Ops
 			elif self.value == "e":
-				return "e^x"
+				return "e^" + str(self.left)
 			elif self.value == "sin":
-				return "sin(x)"
+				return "sin(" + str(self.left) + ")"
 			elif self.value == "log":
-				return "log(x)"
+				return "log(" + str(self.left) + ")"
 
