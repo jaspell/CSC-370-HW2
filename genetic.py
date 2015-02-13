@@ -128,8 +128,31 @@ def combine(first, second):
 	first = ExprTree(0, first)
 	second = ExprTree(0, second)
 
-	first.count()
-	second.count()
+	parent1, left1 = first.random_parent()
+	parent2, left2 = second.random_parent()
+
+	if left1:
+		temp = parent1.left
+
+		if left2:
+			parent1.left = parent2.left
+			parent2.left = temp
+
+		else:
+			parent1.left = parent2.right
+			parent2.right = temp
+	else:
+		temp = parent1.right
+
+		if left2:
+			parent1.right = parent2.left
+			parent2.left = temp
+
+		else:
+			parent1.right = parent2.right
+			parent2.right = temp
+
+	return first, second
 
 def mutate(pop, ratio, mode):
 	"""
