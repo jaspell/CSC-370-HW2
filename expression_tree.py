@@ -34,14 +34,14 @@ class ExprTree:
 
 		if original:
 
-			self.root = Node(original.root.value)
-			clone(self.root, original.root.left, original.root.right)
+			self.root = ExprTree.Node(original.root.value)
+			ExprTree.clone(self.root, original.root.left, original.root.right)
 
 		else:
 
-			self.root = Node(random.choice(OPS_BINARY))
-			populate(self.root, ops)
-	
+			self.root = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
+			ExprTree.populate(self.root, ops)
+
 	@staticmethod
 	def clone(node, left=None, right=None):
 		"""
@@ -59,13 +59,13 @@ class ExprTree:
 
 		if left:
 
-			node.left = Node(left.value)
-			clone(node.left, left.left, left.right)
+			node.left = ExprTree.Node(left.value)
+			ExprTree.clone(node.left, left.left, left.right)
 
 		if right:
 
-			node.right = Node(right.value)
-			clone(node.right, right.left, right.right)
+			node.right = ExprTree.Node(right.value)
+			ExprTree.clone(node.right, right.left, right.right)
 
 	@staticmethod
 	def populate(node, ops):
@@ -81,54 +81,54 @@ class ExprTree:
 
 		r = random.random()
 
-		if r < .125 and node.value not in OPS_UNARY:
+		if r < .125 and node.value not in ExprTree.OPS_UNARY:
 			#set left child to constant
 			if ops == 2:
-				node.left = Node(random.uniform(-100, 100))
+				node.left = ExprTree.Node(random.uniform(-100, 100))
 			else:
-				node.left = Node(random.randint(-100, 100))
+				node.left = ExprTree.Node(random.randint(-100, 100))
 
 
 		elif r < .25:
 			#set left child to variable
 			if ops == 2:
-				node.left = Node(random.choice(OPS_VARS))
+				node.left = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
 			else:
-				node.left = Node("x")
+				node.left = ExprTree.Node("x")
 
 		else:
 			#set left child to some other function (unary or binary)
 			if ops == 3 and random.random() < .5:
-				node.left = Node(random.choice(OPS_UNARY))
+				node.left = ExprTree.Node(random.choice(ExprTree.OPS_UNARY))
 			else:
-				node.left = Node(random.choice(OPS_BINARY))
-			populate(node.left, ops)
+				node.left = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
+			ExprTree.populate(node.left, ops)
 
-		if node.value not in OPS_UNARY:
+		if node.value not in ExprTree.OPS_UNARY:
 
 			r = random.random()
 
 			if r < .125:
 				#set right child to constant
 				if ops == 2:
-					node.right = Node(random.uniform(-100, 100))
+					node.right = ExprTree.Node(random.uniform(-100, 100))
 				else:
-					node.right = Node(random.randint(-100, 100))
+					node.right = ExprTree.Node(random.randint(-100, 100))
 
 			elif r < .25:
 				#set right child to variable
 				if ops == 2:
-					node.right = Node(random.choice(OPS_VARS))
+					node.right = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
 				else:
-					node.right = Node("x")
+					node.right = ExprTree.Node("x")
 
 			else:
 				#set right child to some other function (unary or binary)
 				if ops == 3 and random.random() < .5:
-					node.right = Node(random.choice(OPS_UNARY))
+					node.right = ExprTree.Node(random.choice(ExprTree.OPS_UNARY))
 				else:
-					node.right = Node(random.choice(OPS_BINARY))
-				populate(node.right, ops)
+					node.right = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
+				ExprTree.populate(node.right, ops)
 
 	def count(self):
 		"""
@@ -141,7 +141,7 @@ class ExprTree:
 			int - number of nodes
 		"""
 
-		return count(self.root)
+		return ExprTree.count(self.root)
 
 	@staticmethod
 	def count(node):
@@ -157,9 +157,9 @@ class ExprTree:
 
 		c = 1
 		if node.left:
-			c += count(node.left)
+			c += ExprTree.count(node.left)
 		if node.right:
-			c += count(node.right)
+			c += ExprTree.count(node.right)
 		return c
 
 	def random_parent(self):
@@ -175,8 +175,8 @@ class ExprTree:
 				left - bool - indicates whether chosen node is the left child of the parent
 		"""
 
-		r = random.randint(2, count())
-		parent, left, c, f = get_parent(self.root, r)
+		r = random.randint(2, self.count())
+		parent, left, c, f = ExprTree.get_parent(self.root, r)
 		return parent, left
 
 	@staticmethod
@@ -204,7 +204,7 @@ class ExprTree:
 
 		if node.left:
 
-			parent, left, count, found = get_parent(node.left, n, count)
+			parent, left, count, found = ExprTree.get_parent(node.left, n, count)
 
 			if found:
 
@@ -215,7 +215,7 @@ class ExprTree:
 
 		if node.right:
 
-			parent, left, count, found = get_parent(node.right, n, count)
+			parent, left, count, found = ExprTree.get_parent(node.right, n, count)
 
 			if found:
 
