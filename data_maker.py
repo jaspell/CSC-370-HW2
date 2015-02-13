@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
-import subprocess
-import numpy
+import random
 
-with open("data1.txt", 'w') as f:
+with open("data_test.txt", 'w') as f:
 
-	for i in numpy.arange(-10, 10, 0.1):
-		f.write(str(i) + " " + subprocess.check_output(["java", "-jar", "Generator1.jar", str(i)]))
+	for i in range(100000):
+		x = random.uniform(-10.0, 10.0)
+		f.write(str(x) + " " + str((1/10.0)*(x**2) - x + 4) + "\n")
+
+		if i % 100 == 0:
+			print i

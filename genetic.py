@@ -1,6 +1,6 @@
 """Genetic programming algorithm for HW 2 (8-puzzle A* search)."""
 
-import os
+import subprocess
 import sys
 import random
 
@@ -25,50 +25,52 @@ def fitness(tree, mode):
 
 	# Test vs holdout ratio of data in data.txt.
 	ratio = 0.8
-	total_data = 100000
+	total_data = 10000
 
-	# Step size for input variable.
-	step = 0.05
-	num_points = 100
-	
-	
 	# Maximum number of nodes the tree is allowed to have.
-	max_size = 16
+	max_size = 30
 
 	# If tree exceeds max size, it's no good.
 	if tree.count() > max_size:
 		return sys.maxint
 
-	# Error is initialized to 0.000001 to avoid divide-by-zero errors.
+	# Error is initialized to 0.000001 to avoid divide-by-zero errors (in the perfect case).
 	error = 0.000001
 
 	try:
 		# Evaluate fitness based on Generator1.jar.
 		if mode == 1:
-			for x in range(num_points):
-				error += (tree.evaluate(x*step) - os.system("java -jar Generator1.jar "+str(x*step)))**2
+			with open("data_test.txt", 'r') as inf:
+				for i in range(int(ratio*total_data)):
+					x, y = inf.next().split()
+					error += (tree.evaluate_tree(float(x)) - float(y))**2
 
 		# Evaluate fitness based on data.txt.
 		elif mode == 2:
 			with open("data.txt", 'r') as inf:
-				for i in range(ratio*total_data):
-					inputs = inf.next().split()
-					error += (tree.evaluate(inputs[0], inputs[1], inputs[2]) - inputs[3])**2
+				for i in range(int(ratio*total_data)):
+					x, x2, x3, y = inf.next().split()
+					error += (tree.evaluate_tree(float(x), float(x2), float(x3)) - float(y))**2
 
 		# Evaluate fitness based on Generator2.jar.
 		elif mode == 3:
-			for x in range(num_points):
-				error += (tree.evaluate(x*step) - os.system("java -jar Generator2.jar "+str(x*step)))**2
+			with open("data2_copy.txt", 'r') as inf:
+				for i in range(int(ratio*total_data)):
+					x, y = inf.next().split()
+					error += (tree.evaluate_tree(float(x)) - float(y))**2
+
+		else:
+			raise ValueError("You dun fucked up good, foo!  Wrong mode in fitness")
 
 	# If the tree causes a ValueError, it's no good.
-	except ValueError:
+	except (ValueError, ZeroDivisionError):
 		return sys.maxint
 
 	return error
 
 def crossover(pop, mode):
 	"""
-	Create new generation from current population.
+	Create new generation from current population and print best current tree.
 
 	Parameters:
 		pop - list of ExprTree's - parent population
@@ -80,14 +82,30 @@ def crossover(pop, mode):
 
 	# Evaluate each tree's fitness.  Crossover weights are the inverse of the fitness score.
 	fit = []
-	for tree in pop:
-			fit.append(1.0 / fitness(tree, mode))
+	best = (None, sys.maxint)
+
+	for i, tree in enumerate(pop):
+
+		current = fitness(tree, mode)
+		if current < best[1]:
+			best = (tree, current)
+
+		fit.append(1.0 / current)
+
+		if i % 100 == 0:
+			print i
+
+	print "Best tree: " + str(best[0])
+	print fit
 
 	crosses = weighted_pick(fit, len(fit))
+	print crosses
 	children = []
 
 	for i in xrange(0, len(crosses), 2):
+		#print "Crossing: " + str(crosses[i]) + " and " + str(crosses[i+1])
 		c1, c2 = combine(pop[crosses[i]], pop[crosses[i+1]])
+		#print "Result: " + str(c1) + " and " + str(c2)
 		children.append(c1)
 		children.append(c2)
 
@@ -201,6 +219,7 @@ def mutate_node(node, mode):
 
 	# Replace node.value with either input variable or constant.
 	if type(node.value) is int or node.value in ExprTree.OPS_VARS:
+		node.value = 5													# CHANGE ME
 
 	# Replace node.value with a unary operator.
 	elif node.value in ExprTree.OPS_UNARY:

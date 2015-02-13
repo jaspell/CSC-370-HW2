@@ -79,9 +79,12 @@ class ExprTree:
 			nothing
 		"""
 
+		# Proportion of constant nodes vs variables vs operations
+		dist = [.3, .6]
+
 		r = random.random()
 
-		if r < .3 and node.value not in ExprTree.OPS_UNARY:
+		if r < dist[0] and node.value not in ExprTree.OPS_UNARY:
 			#set left child to constant
 			if ops == 2:
 				node.left = ExprTree.Node(random.uniform(-100, 100))
@@ -89,7 +92,7 @@ class ExprTree:
 				node.left = ExprTree.Node(random.randint(-100, 100))
 
 
-		elif r < .6:
+		elif r < dist[1]:
 			#set left child to variable
 			if ops == 2:
 				node.left = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
@@ -108,14 +111,14 @@ class ExprTree:
 
 			r = random.random()
 
-			if r < .3:
+			if r < dist[0]:
 				#set right child to constant
 				if ops == 2:
 					node.right = ExprTree.Node(random.uniform(-100, 100))
 				else:
 					node.right = ExprTree.Node(random.randint(-100, 100))
 
-			elif r < .6:
+			elif r < dist[1]:
 				#set right child to variable
 				if ops == 2:
 					node.right = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
@@ -141,10 +144,10 @@ class ExprTree:
 			int - number of nodes
 		"""
 
-		return ExprTree.count(self.root)
+		return ExprTree.count_node(self.root)
 
 	@staticmethod
-	def count(node):
+	def count_node(node):
 		"""
 		Recursive function for counting number of nodes rooted at given node.
 
@@ -157,9 +160,9 @@ class ExprTree:
 
 		c = 1
 		if node.left:
-			c += ExprTree.count(node.left)
+			c += ExprTree.count_node(node.left)
 		if node.right:
-			c += ExprTree.count(node.right)
+			c += ExprTree.count_node(node.right)
 		return c
 
 	def random_parent(self):
@@ -226,7 +229,7 @@ class ExprTree:
 
 		return None, None, count, False
 
-	def evaluate(self, x, x2=None, x3=None):
+	def evaluate_tree(self, x, x2=None, x3=None):
 		"""
 		Evaluate the expression tree and return the result.
 
