@@ -84,14 +84,15 @@ class ExprTree:
 
 		r = random.random()
 
+		# left child
+
 		if r < dist[0] and node.value not in ExprTree.OPS_UNARY:
 			#set left child to constant
 			if ops == 2:
 				node.left = ExprTree.Node(random.uniform(-100, 100))
 			else:
 				node.left = ExprTree.Node(random.randint(-100, 100))
-
-
+		
 		elif r < dist[1]:
 			#set left child to variable
 			if ops == 2:
@@ -108,6 +109,7 @@ class ExprTree:
 			ExprTree.populate(node.left, ops)
 
 		if node.value not in ExprTree.OPS_UNARY:
+			# right child if binary
 
 			r = random.random()
 
