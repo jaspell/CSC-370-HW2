@@ -81,7 +81,7 @@ class ExprTree:
 
 		r = random.random()
 
-		if r < .125 and node.value not in ExprTree.OPS_UNARY:
+		if r < .3 and node.value not in ExprTree.OPS_UNARY:
 			#set left child to constant
 			if ops == 2:
 				node.left = ExprTree.Node(random.uniform(-100, 100))
@@ -89,7 +89,7 @@ class ExprTree:
 				node.left = ExprTree.Node(random.randint(-100, 100))
 
 
-		elif r < .25:
+		elif r < .6:
 			#set left child to variable
 			if ops == 2:
 				node.left = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
@@ -108,14 +108,14 @@ class ExprTree:
 
 			r = random.random()
 
-			if r < .125:
+			if r < .3:
 				#set right child to constant
 				if ops == 2:
 					node.right = ExprTree.Node(random.uniform(-100, 100))
 				else:
 					node.right = ExprTree.Node(random.randint(-100, 100))
 
-			elif r < .25:
+			elif r < .6:
 				#set right child to variable
 				if ops == 2:
 					node.right = ExprTree.Node(random.choice(ExprTree.OPS_VARS))
@@ -334,7 +334,7 @@ class ExprTree:
 
 			# Binary Ops
 			elif self.value == "+" or self.value == "-" or self.value == "*" or self.value == "/":
-				return "(" + str(self.left) + self.value + str(self.right) + ")"
+				return "(" + str(self.left) + " " + self.value + " " + str(self.right) + ")"
 
 			# CHANGE FOR ACTUAL GENERATOR 3 IMPLEMENTATION
 			# Unary Ops
