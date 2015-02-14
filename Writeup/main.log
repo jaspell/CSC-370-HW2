@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.16)  13 FEB 2015 22:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.16)  13 FEB 2015 23:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -517,13 +517,22 @@ LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <9> not available
 LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <9> not available
 (Font)              Font shape `OT1/ppl/b/it' tried instead on input line 11.
 ) (./intro.tex
-
-LaTeX Warning: Citation `aima' on page 1 undefined on input line 13.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 7--16
+Underfull \hbox (badness 10000) in paragraph at lines 7--14
 
  []
+
+
+Underfull \hbox (badness 1810) in paragraph at lines 15--20
+\OT1/ppl/m/n/10 ran-domly splices to-gether traits from pairs of fit
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--20
+
+ []
+
+
+LaTeX Warning: Citation `examplerun' on page 1 undefined on input line 25.
 
 ) (./background.tex
 Underfull \hbox (badness 10000) in paragraph at lines 5--15
@@ -563,17 +572,67 @@ Underfull \hbox (badness 3068) in paragraph at lines 70--77
 /
  []
 
-) (./experiments.tex) (./results.tex) (./conclusion.tex) (./ack.tex)
+) (./experiments.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 1661) in paragraph at lines 7--8
+\OT1/ppl/m/n/10 com-bin-ing ex-pres-sion trees based on their fit-ness
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+
+Underfull \hbox (badness 1655) in paragraph at lines 9--10
+\OT1/ppl/m/n/10 trees to re-pro-duce, the al-go-rithm should, af-ter a
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 9--10
+\OT1/ppl/m/n/10 par-ent ex-pres-sion trees to be trans-ferred to child
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
+
+ []
+
+
+Underfull \hbox (badness 2351) in paragraph at lines 13--14
+\OT1/ppl/m/n/10 a code op-ti-miza-tion choice made be-cause power
+ []
+
+
+Underfull \hbox (badness 3219) in paragraph at lines 13--14
+\OT1/ppl/m/n/10 op-er-a-tions can be cre-ated through mul-ti-pli-ca-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 13--14
+
+ []
+
+) (./results.tex) (./conclusion.tex) (./ack.tex)
 No file main.bbl.
 [2] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  4622 strings out of 493308
- 62563 string characters out of 6137816
- 129549 words of memory out of 5000000
+ 62569 string characters out of 6137816
+ 130566 words of memory out of 5000000
  7904 multiletter control sequences out of 15000+600000
  39561 words of font info for 100 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,12n,24p,821b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,12n,24p,824b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.e
 nc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
 b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></us
@@ -587,7 +646,7 @@ s/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type
 alatino/uplri8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on main.pdf (2 pages, 106805 bytes).
+Output written on main.pdf (2 pages, 107591 bytes).
 PDF statistics:
  60 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream
