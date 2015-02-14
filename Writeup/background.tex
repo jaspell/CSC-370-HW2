@@ -1,82 +1,27 @@
 
-\section{Background}
+\section{Expression Trees}
 \label{sec:background}
 
-Describe any background information that the reader would need to know
-to understand your work. You do not have to explain algorithms or
-ideas that we have seen in class. Rather, use this section to describe
-techniques that you found elsewhere in the course of your research,
-that you have decided to bring to bear on the problem at hand. Don't
-go overboard here --- if what you're doing is quite detailed, it's
-often more helpful to give a sketch of the big ideas of the approaches
-that you will be using. You can then say something like ``the reader
-is referred to X for a more in-depth description of...'', and include
-a citation.\\
+For the purposes of our experiment, we represent functions as expression
+trees, in which each node represents either a variable, some constant, or
+some binary operation (addition, subtraction, multiplication or division). Powers
+are represented, when applicable, as multplications of variables. \\
 
-Alternately, you may have designed a novel approach for the problem
---- your own algorithm or heuristic, say. A description of these would
-also be placed in this section (use subsections to better organize the
-content in this case).
+Trees are randomly constructed with a depth limit of eight, and with strictly
+downward-pointing references. The root node is always some binary operation,
+and subsequent nodes have a 25% probability of being a constant, a 25% probability
+of being a variable, and a 50% probability of being some binary operation. The tree is
+recursively filled in any direction either until a terminal node is chosen (constant or variable),
+or until the depth limit has been reached, in which case the chosen node will always
+be either a constant or variable. Trees are evaluated from the top, so that higher nodes
+receive higher precedence, and are able to accept one or three variables, depending
+on the scenario. \\
 
-% Note the \subsection{} command 
-\subsection{Enumerating}
-\label{subsec:enum}
-
-Create bulleted lists by using the \texttt{itemize} command (see source code):
-\begin{itemize}
-  \item Item 1
-  \item Item 2
-  \item Item 3
-\end{itemize}
-Create numbered lists by using the \texttt{enumerate} command (see source code):
-\begin{enumerate}
-  \item Item 1
-  \item Item 2
-    \begin{enumerate}
-    \item Sub-item 2a
-    \item Sub-item 2b
-    \end{enumerate}
-  \item Item 3
-\end{enumerate}
-
-\subsection{Formatting Mathematics}
-\label{subsec:math}
-
-Entire books have been written about typesetting mathematics in
-\LaTeX~, so this guide will barely scratch the surface of what's
-possible. But it contains enough information to get you started, with
-pointers to resources where you can learn more. First, the basics: all
-mathematical content needs to be written in ``math-mode'' --- this is
-done by enclosing the content within \$ symbols. For example, the code
-to produce $6x + 2 = 8$ is \texttt{\$6x + 2 = 8\$}. Note that this is
-only good for inline math; if you would like some stand-alone math on
-a separate line, use \emph{two} \$ symbols. For example,
-\texttt{\$\$6x + 2 = 8\$\$} produces: $$6x+2 = 8$$ Here are various
-other useful mathematical symbols and notations --- see the source
-code to see how to produce them.
-
-\begin{itemize}
-  \item Sub- and super-scripts: $e^{x}, a_{n}, e^{2x+1}, a_{n+2}, f^{i}_{n+1}$
-  \item Common functions: $\log{x}, \sin{x}$
-  \item Greek symbols: $\epsilon, \phi, \pi, \Pi, \Phi$ % capitalizing the first letter produces the upper case letter
-  \item Summations: $\sum_{i=0}^{i=100} i^{2}$ % looks nicer if you typeset it on its own line using $$
-  \item Products: $\prod_{i=0}^{\infty} 2^{-i}$
-  \item Fractions: $3/2$ % prefer this look for inline math
-    $$\frac{x + 5}{2 \cdot \pi}$$\\ % only looks nice when typeset on its own line
-\end{itemize}
-
-\noindent Other useful resources:
-\begin{itemize}
-\item Find the \LaTeX~command you're looking for by drawing what you
-  want to produce\footnote{Thanks to Dr. Kate Thompson for pointing me
-    to this resource. Also, this is how you create a footnote. Also,
-    don't overuse them --- prefer citations and use the
-    acknowledgements section when possible. I usually only use
-    footnotes when I want to link to include a pointer to a web
-    site.}:\url{http://detexify.kirelabs.org/classify.html}
-\item Ask others: \url{http://tex.stackexchange.com/}
-\item Every \LaTeX~symbol ever:\\ \url{http://tinyurl.com/6s85po}
-
-\end{itemize}
-
-
+Two important operations must be performable on expression trees for purposes of the
+genetic algorithm: crossover and mutation. During crossover, a random downward reference
+is picked once from two different trees (below the root), and the subtrees below each are
+swapped with the assistance of a placeholder reference. During mutation, a random node in
+the tree is picked to be replaced with another node. The caveat is that mutations must
+be restricted to categorical similarity. Binary operations may only be swapped with binary
+operations and variables or constants can only be swapped with variables or constants, so
+that all tree connections remain relevant and intact. \\
