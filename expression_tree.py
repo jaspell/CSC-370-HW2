@@ -295,13 +295,13 @@ class ExprTree:
 		elif node.value == "/":
 			return ExprTree.evaluate(node.left,x,x2,x3) / float(ExprTree.evaluate(node.right,x,x2,x3))
 
-		# Unary Ops on X
+		# Unary Ops
 		elif node.value == "e":
-			return math.exp(x)
+			return math.exp(ExprTree.evaluate(node.left,x,x2,x3))
 		elif node.value == "sin":
-			return math.sin(x)
+			return math.sin(ExprTree.evaluate(node.left,x,x2,x3))
 		elif node.value == "log":
-			return math.log(x)
+			return math.log(ExprTree.evaluate(node.left,x,x2,x3))
 
 	def __str__(self):
 		"""
