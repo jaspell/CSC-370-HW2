@@ -2,7 +2,27 @@
 \section{Results}
 \label{sec:results}
 
-In order to help the algorithm converge on the correct solutions, the parameters guiding the behavior of the algorithm were tailored to increase population diversity
+In order to help the algorithm converge on the correct solutions, the parameters guiding the behavior of the algorithm were tailored to increase population diversity, maintain successful trees, and correctly adapt to the goal functions.  The sampling range of the functions also had significant impact on the algorithm's accuracy.  When comparing an expression tree to the goal functions, which determined the fitness of the trees, best results were seen when the error was calculated over a range where the goal function was significantly non-zero.  If the fitness was calculated over larger ranges of input values, the expression trees tended strongly towards constant expressions that minimize total error but describe only the asymptotic tails of the function.  
+
+Data points taken from the first goal function are displayed in Table~\ref{tab:fcn1}.  The second goal function is four dimensional, and cannot be conveniently displayed.
+
+\begin{figure}
+\centering
+	\begin{tikzpicture}
+		\begin{axis}
+			\addplot[scatter, only marks] table [x=x, y=y, col sep=space] {data1_small.txt};
+		\end{axis}
+	\end{tikzpicture}
+\caption{Non-zero section of goal function 1}
+\label{tab:fcn1}
+\end{figure}
+
+Despite careful adjustment of parameters governing tree construction, mutation rate, and the sampling range of the fitness function, we were unable to develop any non-constant expressions for the goal functions as given.  While closing the sampling range to only include the area of the fitness function displaying interesting, non-asymptotic behavior did result in lower error amongst the most accurate trees, the genetic algorithm was unable to determine a more accurate function.  
+
+In order to attempt to match the first goal function, we inverted the output of the function in order to alter the expression needed to produce it.  Surprisingly, this met with success, as the algorithm consistently finds $x^2$ solutions which closely approximate the goal function.  Unlike the runs with the original goal function, the fitness scores converge when evaluating based on the inverted function.  Through this technique, we were able to arrive at an accurate function, which we then invert to conclude that the first goal function is 
+	$$ y = \frac{10}{x^2- 6x + 14} $$
+
+Unfortunately, this technique has not been successful for the second goal function, which has 3 input variables.  For that reason, we were also unable to plot the data in order to determine an appropriate sampling region or to visualize the function in general.  When attempting to fit the second goal function, our algorithm always relies on a constant function.  Unfortunately, this is clearly not a correct solution, as the error associated with such trees is massive.
 
 %Present the results of your experiments. Simply presenting the data is
 %insufficient! You need to analyze your results. What did you discover?

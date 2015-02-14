@@ -12,13 +12,13 @@ __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
 
 def main():
 
-	pop_size = 100
+	pop_size = 1000
 	max_runs = 50
 
 	mutate_ratio = 0.2
 
 	# Which data set to use.
-	mode = 2
+	mode = 1
 
 	random.seed()
 
