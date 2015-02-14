@@ -12,11 +12,13 @@ __email__ = "bewiley@davidson.edu, jaspell@davidson.edu"
 
 def main():
 
-	pop_size = 10
+	pop_size = 100
 	max_runs = 50
 
+	mutate_ratio = 0.2
+
 	# Which data set to use.
-	mode = 1
+	mode = 2
 
 	random.seed()
 
@@ -27,6 +29,7 @@ def main():
 		pop.append(ExprTree(mode))
 
 	print "Population created."
+
 	for tree in pop:
 		print tree
 
@@ -35,12 +38,10 @@ def main():
 		print "Beginning crossover " + str(i) + ":"
 
 		# Crossover and mutate population.
+		genetic.mutate(pop, mutate_ratio, mode)
 		pop = genetic.crossover(pop, mode)
 
 		print "Crossover " + str(i) + " complete."
-
-		for tree in pop:
-			print tree
 
 
 if __name__ == "__main__":

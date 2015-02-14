@@ -40,7 +40,7 @@ class ExprTree:
 		else:
 
 			self.root = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
-			ExprTree.populate(self.root, ops)
+			ExprTree.populate(self.root, ops, 0)
 
 	@staticmethod
 	def clone(node, left=None, right=None):
@@ -68,19 +68,21 @@ class ExprTree:
 			ExprTree.clone(node.right, right.left, right.right)
 
 	@staticmethod
-	def populate(node, ops):
+	def populate(node, ops, depth):
 		"""
 		Recursive function for filling children of given (non-var/constant) node.
 
 		Parameters:
 			node - Node - the current node
+			ops - int - 1, 2, 3 - data set to test against
+			depth - int - max depth of tree
 
 		Returns:
 			nothing
 		"""
 
 		# Proportion of constant nodes vs variables vs operations
-		dist = [.3, .6]
+		dist = [.25, .5]
 
 		r = random.random()
 
@@ -89,9 +91,9 @@ class ExprTree:
 		if r < dist[0] and node.value not in ExprTree.OPS_UNARY:
 			#set left child to constant
 			if ops == 2:
-				node.left = ExprTree.Node(random.uniform(-100, 100))
+				node.left = ExprTree.Node(random.uniform(-10, 10))
 			else:
-				node.left = ExprTree.Node(random.randint(-100, 100))
+				node.left = ExprTree.Node(random.randint(-10, 10))
 		
 		elif r < dist[1]:
 			#set left child to variable
@@ -100,13 +102,20 @@ class ExprTree:
 			else:
 				node.left = ExprTree.Node("x")
 
-		else:
+		elif depth < 8:
 			#set left child to some other function (unary or binary)
 			if ops == 3 and random.random() < .5:
 				node.left = ExprTree.Node(random.choice(ExprTree.OPS_UNARY))
 			else:
 				node.left = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
-			ExprTree.populate(node.left, ops)
+			ExprTree.populate(node.left, ops, depth + 1)
+
+		else:
+			#set left child to constant
+			if ops == 2:
+				node.left = ExprTree.Node(random.uniform(-10, 10))
+			else:
+				node.left = ExprTree.Node(random.randint(-10, 10))
 
 		if node.value not in ExprTree.OPS_UNARY:
 			# right child if binary
@@ -116,9 +125,9 @@ class ExprTree:
 			if r < dist[0]:
 				#set right child to constant
 				if ops == 2:
-					node.right = ExprTree.Node(random.uniform(-100, 100))
+					node.right = ExprTree.Node(random.uniform(-10, 10))
 				else:
-					node.right = ExprTree.Node(random.randint(-100, 100))
+					node.right = ExprTree.Node(random.randint(-10, 10))
 
 			elif r < dist[1]:
 				#set right child to variable
@@ -127,13 +136,20 @@ class ExprTree:
 				else:
 					node.right = ExprTree.Node("x")
 
-			else:
+			elif depth < 8:
 				#set right child to some other function (unary or binary)
 				if ops == 3 and random.random() < .5:
 					node.right = ExprTree.Node(random.choice(ExprTree.OPS_UNARY))
 				else:
 					node.right = ExprTree.Node(random.choice(ExprTree.OPS_BINARY))
-				ExprTree.populate(node.right, ops)
+				ExprTree.populate(node.right, ops, depth + 1)
+
+			else:
+				#set right child to constant
+				if ops == 2:
+					node.right = ExprTree.Node(random.uniform(-10, 10))
+				else:
+					node.right = ExprTree.Node(random.randint(-10, 10))
 
 	def count(self):
 		"""
@@ -335,7 +351,7 @@ class ExprTree:
 			if self.value == "x" or self.value == "x2" or self.value == "x3":
 				return self.value
 			elif type(self.value) is int or type(self.value) is float:
-				return str(self.value)
+				return str(round(self.value, 2))
 
 			# Binary Ops
 			elif self.value == "+" or self.value == "-" or self.value == "*" or self.value == "/":

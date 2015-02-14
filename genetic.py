@@ -1,9 +1,9 @@
 """Genetic programming algorithm for HW 2 (8-puzzle A* search)."""
 
-import subprocess
 import sys
 import random
 
+import math
 import numpy
 
 from expression_tree import ExprTree
@@ -25,7 +25,7 @@ def fitness(tree, mode):
 
 	# Test vs holdout ratio of data in data.txt.
 	ratio = 0.8
-	total_data = 10000
+	total_data = 1000
 
 	# Maximum number of nodes the tree is allowed to have.
 	max_size = 30
@@ -40,24 +40,24 @@ def fitness(tree, mode):
 	try:
 		# Evaluate fitness based on Generator1.jar.
 		if mode == 1:
-			with open("data_test.txt", 'r') as inf:
+			with open("data1_small.txt", 'r') as inf:
 				for i in range(int(ratio*total_data)):
 					x, y = inf.next().split()
-					error += (tree.evaluate_tree(float(x)) - float(y))**2
+					error += math.fabs(tree.evaluate_tree(float(x)) - float(y))
 
 		# Evaluate fitness based on data.txt.
 		elif mode == 2:
 			with open("data.txt", 'r') as inf:
 				for i in range(int(ratio*total_data)):
 					x, x2, x3, y = inf.next().split()
-					error += (tree.evaluate_tree(float(x), float(x2), float(x3)) - float(y))**2
+					error += math.fabs(tree.evaluate_tree(float(x), float(x2), float(x3)) - float(y))
 
 		# Evaluate fitness based on Generator2.jar.
 		elif mode == 3:
 			with open("data2_copy.txt", 'r') as inf:
 				for i in range(int(ratio*total_data)):
 					x, y = inf.next().split()
-					error += (tree.evaluate_tree(float(x)) - float(y))**2
+					error += math.fabs(tree.evaluate_tree(float(x)) - float(y))
 
 		else:
 			raise ValueError("You dun fucked up good, foo!  Wrong mode in fitness")
@@ -82,6 +82,7 @@ def crossover(pop, mode):
 
 	# Evaluate each tree's fitness.  Crossover weights are the inverse of the fitness score.
 	fit = []
+	orig = []
 	best = (None, sys.maxint)
 
 	for i, tree in enumerate(pop):
@@ -90,16 +91,16 @@ def crossover(pop, mode):
 		if current < best[1]:
 			best = (tree, current)
 
+		orig.append(current)
 		fit.append(1.0 / current)
 
 		if i % 100 == 0:
 			print i
 
 	print "Best tree: " + str(best[0])
-	print fit
+	print "Error: " + str(round(best[1]))
 
 	crosses = weighted_pick(fit, len(fit))
-	print crosses
 	children = []
 
 	for i in xrange(0, len(crosses), 2):
@@ -187,9 +188,9 @@ def mutate(pop, ratio, mode):
 
 	for tree in pop:
 		if random.random() < ratio:
-			mutate(tree)
+			mutate_tree(tree, mode)
 
-def mutate(tree, mode):
+def mutate_tree(tree, mode):
 	"""
 	Mutate given tree at one node.
 
@@ -202,7 +203,11 @@ def mutate(tree, mode):
 	"""
 
 	# CHANGE RANDINT BOUNDS DEPENDING ON INDEXING SYSTEM FOR NODE COUNTING (DFS SEARCH, COUNT).
-	node = tree.find_node(random.randint(0, tree.count()))
+	node, left = tree.random_parent()
+	if left:
+		node = node.left
+	else:
+		node = node.right
 	mutate_node(node, mode)
 
 def mutate_node(node, mode):
@@ -219,7 +224,19 @@ def mutate_node(node, mode):
 
 	# Replace node.value with either input variable or constant.
 	if type(node.value) is int or node.value in ExprTree.OPS_VARS:
-		node.value = 5													# CHANGE ME
+
+		# Replace with random constant
+		if random.random() < 0.5:
+			if mode == 2:
+				node.value = random.uniform(-10, 10)
+			else:
+				node.value = random.randint(-10, 10)
+
+		else:
+			if mode == 2:
+				node.value = random.choice(ExprTree.OPS_VARS)
+			else:
+				node.value = "x"
 
 	# Replace node.value with a unary operator.
 	elif node.value in ExprTree.OPS_UNARY:
