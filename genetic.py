@@ -40,7 +40,7 @@ def fitness(tree, mode):
 	try:
 		# Evaluate fitness based on Generator1.jar.
 		if mode == 1:
-			with open("data1_small.txt", 'r') as inf:
+			with open("data_test.txt", 'r') as inf:
 				for i in range(int(ratio*total_data)):
 					x, y = inf.next().split()
 					error += math.fabs(tree.evaluate_tree(float(x)) - float(y))
