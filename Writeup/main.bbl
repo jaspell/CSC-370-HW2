@@ -1,3 +1,13 @@
 \begin{thebibliography}{}
 
+<<<<<<< HEAD
+=======
+\bibitem[\protect\citeauthoryear{Koza}{1992}]{examplerun}
+Koza, J.~R.
+\newblock 1992.
+\newblock {\em Genetic Programming: On the Programming of Computers by Means of
+  Natural Selection}.
+\newblock Cambridge, MA, USA: MIT Press.
+
+>>>>>>> 0ee7c11fe7dff277fb639d14d44974e1003c697a
 \end{thebibliography}
