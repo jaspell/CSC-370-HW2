@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.16)  14 FEB 2015 00:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.16)  16 FEB 2015 14:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -920,42 +920,29 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 5.
 ) (./intro.tex
-Underfull \hbox (badness 10000) in paragraph at lines 7--14
 
- []
-
-
-Underfull \hbox (badness 1810) in paragraph at lines 15--20
-\OT1/ppl/m/n/10 ran-domly splices to-gether traits from pairs of fit
- []
+LaTeX Warning: Citation `koza' on page 1 undefined on input line 25.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--20
-
- []
+LaTeX Warning: File `figs/exprtrees.jpg' not found on input line 29.
 
 
-LaTeX Warning: Citation `examplerun' on page 1 undefined on input line 25.
+! Package pdftex.def Error: File `figs/exprtrees.jpg' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29 ...[width=0.47\textwidth]{figs/exprtrees.jpg}
+                                                  
+? 
+
+LaTeX Warning: Citation `fig:gpquadraticexample' on page 1 undefined on input l
+ine 30.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
-[]\OT1/ppl/m/n/10 todo: in-clude ex-pres-sion tree
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
-\OT1/ppl/m/n/10 graphic from http://www.genetic-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--28
-\OT1/ppl/m/n/10 programming.com/gpquadraticexample.html and
- []
+LaTeX Warning: Citation `fig:gpquadraticexample' on page 1 undefined on input l
+ine 30.
 
 ) (./background.tex
 Underfull \hbox (badness 10000) in paragraph at lines 5--9
@@ -967,7 +954,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--19
 
  []
 
-) (./experiments.tex
+
+Underfull \vbox (badness 2894) has occurred while \output is active []
+
+ [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+
+])
+(./experiments.tex
 Underfull \hbox (badness 1147) in paragraph at lines 20--1
 \OT1/ppl/m/n/10 are swapped with the as-sis-tance of a place-holder
  []
@@ -988,13 +983,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--6
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-
-]
 Underfull \hbox (badness 1661) in paragraph at lines 7--8
 \OT1/ppl/m/n/10 com-bin-ing ex-pres-sion trees based on their fit-ness
  []
@@ -1040,30 +1028,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--14
  []
 
 ) (./results.tex
+
+LaTeX Warning: Reference `tab:fcn1' on page 2 undefined on input line 7.
+
 PGFPlots: reading {data1_small.txt}
- [2]) (./conclusion.tex) (./main.bbl
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3 \end{thebibliography}
-                         
-? 
-) [3
+[2]) (./conclusion.tex) (./main.bbl) [3
 
 ] (./main.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 23235 strings out of 493308
- 566891 string characters out of 6137816
- 1130165 words of memory out of 5000000
- 26191 multiletter control sequences out of 15000+600000
+ 23239 strings out of 493308
+ 566937 string characters out of 6137816
+ 1132851 words of memory out of 5000000
+ 26192 multiletter control sequences out of 15000+600000
  25855 words of font info for 67 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  62i,12n,76p,916b,1843s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1076,7 +1059,7 @@ st/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts
 urw/palatino/uplr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/pal
 atino/uplri8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utm
 r8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (3 pages, 133807 bytes).
+Output written on main.pdf (3 pages, 140691 bytes).
 PDF statistics:
  54 PDF objects out of 1000 (max. 8388607)
  39 compressed objects within 1 object stream
