@@ -5,17 +5,17 @@
 For the purposes of our experiment, we represent functions as expression
 trees, in which each node represents either a variable, some constant, or
 some binary operation (addition, subtraction, multiplication or division). Powers
-are represented, when applicable, as multplications of variables. \\
+are represented, when applicable, as multplications of variables.
 
 Trees are randomly constructed with a depth limit of eight, and with strictly
 downward-pointing references. The root node is always some binary operation,
 and subsequent nodes have a 25$\%$ probability of being a constant, a 25$\%$ probability
-of being a variable, and a 50$\%$ probability of being some binary operation. The tree is
+of being a variable, and a 50$\%$ probability of being a randomly chosen binary operation. The tree is
 recursively filled in any direction either until a terminal node is chosen (constant or variable),
 or until the depth limit has been reached, in which case the chosen node will always
 be either a constant or variable. Trees are evaluated from the top, so that higher nodes
 receive higher precedence, and are able to accept one or three variables, depending
-on the scenario. \\
+on the scenario.
 
 Two important operations must be performable on expression trees for purposes of the
 genetic algorithm: crossover and mutation. During crossover, a random downward reference
@@ -24,4 +24,4 @@ swapped with the assistance of a placeholder reference. During mutation, a rando
 the tree is picked to be replaced with another node. The caveat is that mutations must
 be restricted to categorical similarity. Binary operations may only be swapped with binary
 operations and variables or constants can only be swapped with variables or constants, so
-that all tree connections remain relevant and intact. \\
+that all tree connections remain relevant and intact.
